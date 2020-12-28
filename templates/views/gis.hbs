@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>{{ title }}</title>
+        <link rel="icon" href="/img/speech_icon.png">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header }}
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+            <p>
+                This visualisation shows the number of granted EU projects. Not many european projects have been granted in this topic. In the latest years, only one project per year or less started.
+            </p>
+            <canvas id="dnChart3" width="800" height="450"></canvas>
+            <script src="../js/hbars.js"></script>
+            <br>
+        </div>
+        <br>
+        
+        <div class="main-content">
+            <p>This visualisation shows the number of granted EU projects. Not many european projects have been granted in this topic. In the latest years, only one project per year or less started.
+            </p>
+            
+            <canvas id="polar-chart" width="800" height="450"></canvas>
+            <script src="../js/polar-graph.js"></script>
+            
+        </div>
+
+    </body>
+
+    {{>footer}}
+
+</html>
