@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Codata 2020</title>
+        <link rel="icon" href="/img/speech_icon.png">
+        <link rel="stylesheet" href="/css/styles.css">
+        
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <style>
+            #mapid { height: 180px; }
+        </style>
+    </head>
+    <body>
+        {{>header}}
+
+        <p>Ultimo aggiornamento {{dataAggiornamento}}.</p>
+        <div id="mapid" style="width: 600px; height: 300px;"></div>
+
+        <script src="./js/heatmap.js"></script>
+        <script src="./js/leaflet-heatmap.js"></script>
+
+
+        <script>
+          window.onload = function() {
+            var testData = {
+                max: Math.log(996),
+                data: [
+                {lat: 43.7589393, lng: 10.9618297, count: Math.log(98)}, /* capraia*/
+                {lat: 43.6225791, lng: 10.8810441, count: Math.log(325)}, /* castel fiorentino */
+                {lat: 43.7603815, lng: 10.8655856, count: Math.log(210)}, /* cerreto guidi */
+                {lat: 43.5526877, lng: 11.0230629, count: Math.log(203)}, /* certaldo */
+                {lat: 43.7158876, lng: 10.8659648, count: Math.log(996)}, /* empoli*/          
+                {lat: 43.7304247, lng: 10.7847935, count: Math.log(325)}, /*fucecchio*/
+                {lat: 43.5223036, lng: 10.8726179, count: Math.log(1)}, /*gambassi t*/
+                {lat: 43.7333108, lng: 10.991947, count: Math.log(231)}, /*montelupo*/
+                {lat: 43.6395457, lng: 11.0610746, count: Math.log(149)}, /*montespertoli*/
+                {lat: 43.7828228, lng: 10.906902, count: Math.log(291)}, /*vinci*/
+                {lat: 43.6831969, lng: 10.836269, count: Math.log(484)} /*san miniato*/
+                ]};
+
+              var baseLayer = L.tileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                  maxZoom: 20
+                }
+              );
+
+              var cfg = {
+                // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+                "radius": 0.02,
+                "maxOpacity": .8,
+                // scales the radius based on map zoom
+                "scaleRadius": true,
+                // if set to false the heatmap uses the global maximum for colorization
+                // if activated: uses the data maximum within the current map boundaries
+                //   (there will always be a red spot with useLocalExtremas true)
+                "useLocalExtrema": true,
+                // which field name in your data represents the latitude - default "lat"
+                latField: 'lat',
+                // which field name in your data represents the longitude - default "lng"
+                lngField: 'lng',
+                // which field name in your data represents the data value - default "value"
+                valueField: 'count'
+              };
+
+
+              var heatmapLayer = new HeatmapOverlay(cfg);
+
+              var map = new L.Map('mapid', {
+                center: new L.LatLng(43.7158876,10.8659648),
+                zoom: 10,
+                layers: [baseLayer, heatmapLayer]
+              });
+
+              heatmapLayer.setData(testData);
+
+              }
+        </script>
+
+    </body>
+    {{>footer}}
+</html>
+
